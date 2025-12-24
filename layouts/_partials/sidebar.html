@@ -86,7 +86,7 @@
           </li>
         {{- else -}}
           {{- $active := eq $pageURL .RelPermalink -}}
-          {{- $shouldOpen := or (.Params.sidebar.open) (.IsAncestor $page) $active | default true }}
+          {{- $shouldOpen := or (.Params.sidebar.open) (.IsAncestor $page) $active | default false }} <!--true-->
           <li class="{{ if $shouldOpen }}open{{ end }}">
             {{- $linkTitle := partial "utils/title" . -}}
             {{- template "sidebar-item-link" dict "context" . "active" $active "title" $linkTitle "link" .RelPermalink -}}
@@ -102,7 +102,7 @@
         <ul class='hx:relative hx:flex hx:flex-col hx:gap-1 hx:before:absolute hx:before:inset-y-1 hx:before:w-px hx:before:bg-gray-200 hx:before:content-[""] hx:ltr:ml-3 hx:ltr:pl-3 hx:ltr:before:left-0 hx:rtl:mr-3 hx:rtl:pr-3 hx:rtl:before:right-0 hx:dark:before:bg-neutral-800'>
           {{- range $items.ByWeight }}
             {{- $active := eq $pageURL .RelPermalink -}}
-            {{- $shouldOpen := or (.Params.sidebar.open) (.IsAncestor $page) $active | default true }}
+            {{- $shouldOpen := or (.Params.sidebar.open) (.IsAncestor $page) $active | default false }}
             {{- $linkTitle := partial "utils/title" . -}}
             <li class="hx:flex hx:flex-col {{ if $shouldOpen }}open{{ end }}">
               {{- template "sidebar-item-link" dict "context" . "active" $active "title" $linkTitle "link" .RelPermalink -}}
@@ -161,7 +161,7 @@
 
 {{- define "sidebar-item-link" -}}
   {{- $external := strings.HasPrefix .link "http" -}}
-  {{- $open := .open | default true -}}
+  {{- $open := .open | default false -}}
   <a
     class="hx:flex hx:items-center hx:justify-between hx:gap-2 hx:cursor-pointer hx:rounded-sm hx:px-2 hx:py-1.5 hx:text-sm hx:transition-colors [-webkit-tap-highlight-color:transparent] [-webkit-touch-callout:none] [word-break:break-word]
     {{- if .active }}

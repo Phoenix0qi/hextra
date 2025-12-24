@@ -43,6 +43,11 @@ body {
   @apply hx:outline-none hx:ring-2 hx:ring-primary-200 hx:ring-offset-1 hx:ring-offset-primary-300 hx:dark:ring-primary-800 hx:dark:ring-offset-primary-700;
 }
 
+
+
+/* Scrollbar */
+/* .sidebar{ overflow-y: scroll; max-height: 100px; }  */
+
 @import "./typography.css";
 @import "./highlight.css";
 @import "./components/cards.css";
