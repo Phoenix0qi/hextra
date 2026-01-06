@@ -3,31 +3,6 @@
     {{ partial "sidebar.html" (dict "context" . "disableSidebar" true "displayPlaceholder" true) }}
     {{ partial "toc.html" . }}
 
-    {{ if ne (.Lastmod.Format "2006-01-02") (.Date.Format "2006-01-02") }}
-        <p> 最后更新于 {{ .Lastmod.Year }} 年 {{ printf "%d" .Lastmod.Month }} 月 {{ .Lastmod.Day }} 日</p>
-    {{ end }}        
-
-    
-    {{- /* 标题下方标签显示代码 */ -}}
-    {{- if .Params.tags -}}
-    <div class="hx:mt-2 hx:mb-6 hx:flex hx:flex-wrap hx:gap-2">
-      {{- range $tag := .Params.tags -}}
-        {{- /* 获取标签页面的链接 */ -}}
-        {{- $tagPage := site.GetPage (printf "/tags/%s" ($tag | urlize)) -}}
-        {{- $href := "" -}}
-        {{- if $tagPage -}}
-          {{- $href = $tagPage.RelPermalink -}}
-        {{- else -}}
-          {{- $href = printf "/tags/%s/" ($tag | urlize) | relLangURL -}}
-        {{- end -}}
-
-        <a href="{{ $href }}" 
-          class="hx:inline-block hx:whitespace-nowrap hx:rounded-md hx:bg-gray-100 hx:px-2 hx:py-0.5 hx:text-sm hx:font-medium hx:text-gray-600 hx:transition-colors hx:hover:bg-primary-100 hx:hover:text-primary-700 hx:dark:bg-neutral-800 hx:dark:text-gray-400 hx:dark:hover:bg-primary-900/30 hx:dark:hover:text-primary-400">
-          #{{ $tag }}
-        </a>
-      {{- end -}}
-    </div>
-    {{- end -}}
 
     <article class="hx:w-full hx:break-words hx:flex hx:min-h-[calc(100vh-var(--navbar-height))] hx:min-w-0 hx:justify-center hx:pb-8 hx:pr-[calc(env(safe-area-inset-right)-1.5rem)]">
       <main class="hx:w-full hx:min-w-0 hx:max-w-6xl hx:px-6 hx:pt-4 hx:md:px-12">
@@ -35,6 +10,37 @@
         <br class="hx:mt-1.5 hx:text-sm" />
         {{ if .Title }}<h1 class="hx:text-center hx:mt-2 hx:text-4xl hx:font-bold hx:tracking-tight hx:text-slate-900 hx:dark:text-slate-100">{{ .Title }}</h1>{{ end }}
         <div class="hx:mb-16"></div>
+        
+        <div class="hx:mb-4"></div>
+
+        <span class="meta">
+            📗 {{ .WordCount }} 字 |
+            ⏳ 约 {{ .ReadingTime }} 分钟
+        </span>
+          <br>{{ if ne (.Lastmod.Format "2006-01-02") (.Date.Format "2006-01-02") }}
+              <span class="hx:text-sm"> Last Modified: 最后更新于 {{ .Lastmod.Year }} 年 {{ printf "%d" .Lastmod.Month }} 月 {{ .Lastmod.Day }} 日</span>
+          {{ end }}       
+        {{- /* 标题下方标签显示代码 */ -}}
+        {{- if .Params.tags -}}
+        <div class="hx:mt-2 hx:mb-6 hx:flex hx:flex-wrap hx:gap-2">
+          {{- range $tag := .Params.tags -}}
+            {{- /* 获取标签页面的链接 */ -}}
+            {{- $tagPage := site.GetPage (printf "/tags/%s" ($tag | urlize)) -}}
+            {{- $href := "" -}}
+            {{- if $tagPage -}}
+              {{- $href = $tagPage.RelPermalink -}}
+            {{- else -}}
+              {{- $href = printf "/tags/%s/" ($tag | urlize) | relLangURL -}}
+            {{- end -}}
+
+            <a href="{{ $href }}" 
+              class="hx:inline-block hx:whitespace-nowrap hx:rounded-md hx:bg-gray-100 hx:px-2 hx:py-0.5 hx:text-sm hx:font-medium hx:text-gray-600 hx:transition-colors hx:hover:bg-primary-100 hx:hover:text-primary-700 hx:dark:bg-neutral-800 hx:dark:text-gray-400 hx:dark:hover:bg-primary-900/30 hx:dark:hover:text-primary-400">
+              #{{ $tag }}
+            </a>
+          {{- end -}}
+        </div>
+        {{- end -}}
+        
         <div class="content">
           {{ .Content }}
         </div>
